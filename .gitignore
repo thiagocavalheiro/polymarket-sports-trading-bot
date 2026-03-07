@@ -1,3 +1,7 @@
-/dist
+/target
+**/*.rs.bk
+Cargo.lock
 config.json
-node_modules
+*.log
+history.toml
+.env
