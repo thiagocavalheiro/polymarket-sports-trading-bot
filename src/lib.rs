@@ -7,6 +7,7 @@ pub mod merge;
 pub mod models;
 pub mod monitor;
 pub mod rtds;
+pub mod tennis;
 pub mod simulation;
 pub mod trader;
 
