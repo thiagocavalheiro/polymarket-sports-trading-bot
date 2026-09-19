@@ -10,6 +10,7 @@ use rust_decimal::prelude::ToPrimitive;
 
 use polymarket_trading_bot::api::PolymarketApi;
 use polymarket_trading_bot::detector::{BuyOpportunity, TokenType};
+use polymarket_trading_bot::tennis::{self, TennisMatchState};
 use polymarket_trading_bot::trader::Trader;
 
 const MIN_FIRST_BUY_COST: f64 = 1.0;
@@ -165,6 +166,47 @@ async fn main() -> Result<()> {
         eprintln!("End time (Unix): {}", et);
     }
 
+    // Optional live-tennis match-state overlay (data feed only — never trades).
+    // Active only when trading.tennis_match_id is set. It publishes the latest
+    // match state so the loop can hold a buy on a break point or a stopped match.
+    let tennis_state: Option<Arc<tokio::sync::Mutex<Option<TennisMatchState>>>> =
+        match config.trading.tennis_match_id.as_ref().filter(|s| !s.is_empty()) {
+            Some(match_id) => match std::env::var("LIVETENNISAPI_KEY") {
+                Ok(api_key) if !api_key.is_empty() => {
+                    let base = config
+                        .trading
+                        .tennis_api_base
+                        .clone()
+                        .unwrap_or_else(|| tennis::DEFAULT_BASE_URL.to_string());
+                    let poll = config
+                        .trading
+                        .tennis_poll_interval_seconds
+                        .unwrap_or(tennis::DEFAULT_POLL_INTERVAL_SECS);
+                    let shared = Arc::new(tokio::sync::Mutex::new(None));
+                    eprintln!(
+                        "\u{1F3BE} Live tennis match-state overlay ON — match {} (poll {}s)",
+                        match_id, poll
+                    );
+                    tennis::spawn_tennis_state_task(
+                        reqwest::Client::new(),
+                        base,
+                        api_key,
+                        match_id.clone(),
+                        poll,
+                        shared.clone(),
+                    );
+                    Some(shared)
+                }
+                _ => {
+                    warn!(
+                        "tennis_match_id is set but LIVETENNISAPI_KEY is missing — match-state overlay disabled"
+                    );
+                    None
+                }
+            },
+            None => None,
+        };
+
     let trader = Arc::new(Trader::new(api.clone(), config.trading.clone(), is_simulation, None)?);
     let state: Arc<tokio::sync::Mutex<SportsTrailingState>> =
         Arc::new(tokio::sync::Mutex::new(SportsTrailingState::WaitingFirst {
@@ -199,6 +241,21 @@ async fn main() -> Result<()> {
 
         let ask0 = ask_f64(&p0);
         let ask1 = ask_f64(&p1);
+        // Tennis match-state overlay: hold this tick on a break point or a
+        // stopped match. Fail-open — no overlay / no state means trade as usual.
+        if let Some(ts) = tennis_state.as_ref() {
+            let snapshot = ts.lock().await.clone();
+            let gate = tennis::evaluate_gate(snapshot.as_ref());
+            if !gate.allow_trade {
+                polymarket_trading_bot::log_println!(
+                    "\u{23F8}\u{FE0F} Tennis overlay holding trade this tick: {:?}",
+                    gate.reason
+                );
+                tokio::time::sleep(tokio::time::Duration::from_millis(check_interval_ms)).await;
+                continue;
+            }
+        }
+
 
         {
             let guard = state.lock().await;
