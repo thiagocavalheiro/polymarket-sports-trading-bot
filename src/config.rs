@@ -178,6 +178,17 @@ pub struct TradingConfig {
     pub trailing_shares: Option<f64>,
     /// 5m dual-limit: when true, use trailing-buy mode (no limit orders; monitor token with ask > 0.55, track highest, buy when ask <= highest - trailing_stop; then second trailing for opposite with band from first bought price). When false, use limit-order mode (place Up/Down at dual_limit_price).
     pub dual_limit_trailing_buy_mode: Option<bool>,
+    /// Tennis match-state overlay (sports trailing bot): Live Tennis API match id.
+    /// When set, the sports trailing loop reads live match state and holds a buy
+    /// while a break point is in play or the match has stopped (retirement /
+    /// walkover / suspension). When None, the overlay is inactive (no change).
+    /// The API key is read from the LIVETENNISAPI_KEY environment variable.
+    pub tennis_match_id: Option<String>,
+    /// Tennis overlay: Live Tennis API base URL. Default:
+    /// https://api.livetennisapi.com/api/public/v1
+    pub tennis_api_base: Option<String>,
+    /// Tennis overlay: seconds between match-state polls. Default: 5.
+    pub tennis_poll_interval_seconds: Option<u64>,
 }
 
 impl Default for PolymarketConfig {
@@ -231,6 +242,9 @@ impl Default for TradingConfig {
             dual_limit_hedge_trailing_stop: Some(0.03),
             trailing_shares: Some(10.0),
             dual_limit_trailing_buy_mode: Some(false),
+            tennis_match_id: None,
+            tennis_api_base: None,
+            tennis_poll_interval_seconds: None,
         }
     }
 }
